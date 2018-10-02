@@ -1,0 +1,104 @@
+读取application.yml的配置
+
+	@Value("${key}")
+	private String value;
+
+环境分离
+	
+	与application.yml同级文件夹建立配置文件如：application-dev.yml  application-prod.yml
+	在application.yml中添加  spring:	 profiles:	active: prod/dev
+
+	跳过测试编译：mvn package -D maven.test.skip=true
+
+定位静态资源到非tomcat的目录
+	
+	windows:
+
+		spring:	mvc:	static-path-pattern: /**
+		spring:	resources:	static-locations: file:\H:\\pic  	
+		# H:\pic
+
+	linux:
+
+		spring:	mvc:	static-path-pattern: /**
+		spring:	resources:	static-locations: file:////home/river/upload/pic
+		# /home/river/upload/pic
+
+	访问：
+
+		http://localhost:es/******
+
+文件上传临时目录
+
+	linux:
+		
+		server:	tomcat:	basedir: /opt/tmp
+
+	windows:
+
+		server:	tomcat:	basedir: file:\H:\\pic
+
+	@Bean
+	MultipartConfigElementmultipartConfigElement() {
+		MultipartConfigFactory factory =new MultipartConfigFactory(); 
+		factory.setLocation("/data/apps/temp"); 
+		return factory.createMultipartConfig();
+	}
+
+作者：zero_c069
+链接：https://www.jianshu.com/p/cfbbc0bb0b84
+來源：简书
+简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
+
+获得classpath的物理路径
+	
+	File path;
+    try {
+        path=new File(ResourceUtils.getURL("classpath:").getPath());
+        if (!path.exists())
+            path.mkdirs();
+        System.out.println(path.getAbsolutePath());
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+
+    或
+
+    File path;
+    try {
+        path=new File(ResourceUtils.getURL("classpath:static").getPath());
+        if (!path.exists())
+            path.mkdirs();
+        System.out.println(path.getAbsolutePath());
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+
+时间格式化
+    
+    1，全局全局配置
+    spring.jackson.date-format=yyyy-MM-dd HH:mm:ss
+    spring.jackson.time-zone=GMT+8
+
+    2，一种是在某个字段之上添加：
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+
+Jackson注解
+    
+    别名
+        @JsonProperty("title")  //序列化和反序列化都有效
+    忽略
+        作用在字段或方法上
+        @JsonIgnore           //作用在字段或方法上，用来完全忽略被注解的字段和方法对应的属性.
+
+        作用在类上
+        @JsonIgnoreProperties
+
+            可以注明是想要忽略的属性列表如
+                @JsonIgnoreProperties({"name","age","title"})，
+                
+            也可以注明过滤掉未知的属性如
+                @JsonIgnoreProperties(ignoreUnknown=true)
+        
+
+

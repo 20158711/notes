@@ -1,0 +1,8 @@
+加入本地依赖
+
+        <dependency>
+            <groupId>uedit</groupId>
+            <artifactId>uedit</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/lib/ueditor-1.1.2.jar</systemPath>
+        </dependency>

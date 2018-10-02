@@ -1,0 +1,1 @@
+url="jdbc:mysql://localhost:3306/shiro?useSSL=false&characterEncoding=utf-8"

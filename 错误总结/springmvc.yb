@@ -1,0 +1,4 @@
+Caused by: java.lang.IllegalArgumentException: @EnableAsync annotation metadata was not injected
+	<context:component-scan base-package="org"/>
+	把spring的包都扫描到了，不行
+	<context:component-scan base-package="org.controller"/>

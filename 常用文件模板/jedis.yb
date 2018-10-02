@@ -1,0 +1,15 @@
+Caused by: redis.clients.jedis.exceptions.InvalidURIException: Cannot open Redis connection due invalid URI. 10.2.130.95
+	
+	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg ref="jedisPoolConfig"/>
+        <constructor-arg value="10.2.130.95"/>
+        <constructor-arg value="6379"/>
+    </bean>
+
+    解决：
+    //"127.0.0.1"与"6379"都被当成String,构造时类型出错
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg ref="jedisPoolConfig"/>
+        <constructor-arg value="127.0.0.1" type="java.lang.String"/>
+        <constructor-arg value="6379" type="int"/>
+    </bean>

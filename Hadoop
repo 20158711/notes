@@ -1,0 +1,75 @@
+特征：4V
+
+	Volume		数据量大
+	Variety		类型多
+	Value		价值密度
+	Velocity	速度
+
+步骤
+
+	数据采集
+	数据存储
+	数据处理/分析/挖掘
+	可视化
+
+瓶颈
+
+	存储容量		MapReduce
+	读写速度		BigTable
+	计算效率		GFS
+
+Hadoop
+
+	分布式文件系统HDFS
+	分布式资源高度YARN
+	分布式广计算MapReduce
+
+HDFS
+	
+	特点：
+		扩展性&容错性&海量数据存储
+		将文件切分成指定大小的数据块并以多副本的形式存储在多
+		个机器上（对用户透明）
+
+	架构：
+		1 Master 	(NameNode)  n个Slave		(DateNode)
+		NameNode 	负责客户端请求响应
+					负责元数据管理（文件名称，副本系数，Block存放的DN)的管理
+		DateNode 	存储用户的文件对应的数据块(Block)
+					定期向NN发送心跳
+
+	存放策略：
+		同客户端机架的Block，不同的机架中存放两份
+
+	文件写：
+		client->NN(with size)
+		拆分，第一个block上传
+		上传到空闲的Block(距离排序)
+		client->block1  同时 block1->bolck2  , block2->block3
+		block1,2,3 报告 NN
+
+		第二个Block ...
+
+		关闭连接
+
+	文件读：
+
+		client->NN(文件名)
+		NN->client(sorted NN x1,NN x2,NN x3)
+
+
+YARN
+	
+	Yet Another Resource Negotator
+
+	负责整个集群资源的管理和调度
+
+	特点：扩展&容错&多框架资源统一调度
+
+MapReduce
+
+	特点：扩展&容错&海量数据离线处理
+
+Spark
+
+	

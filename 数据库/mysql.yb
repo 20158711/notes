@@ -1,0 +1,28 @@
+CREATE DATABASE es DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+update user set authentication_string=password('123456') where user='root';
+
+yum install mysql-community-server
+
+wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+
+rpm -ivh mysql-community-release-el7-5.noarch.rpm
+
+yum install mysql-server
+
+重置密码
+	
+	vim /etc/my.cnf
+
+	skip-grant-tables
+
+	systemctl restart mysqld
+
+	mysql -uroot
+
+	update mysql.user set authentication_string=password('123456');
+
+	flush privileges ;
+
+	systemctl restart mysqld
+
